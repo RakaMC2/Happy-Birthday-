@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: radial-gradient(circle at top, #ffb6e6, #ff69b4, #ff1493);
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }.hidden { display: none; }
+
+#welcomeForm, #cakeForm, #greetingForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.2);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255,20,147,0.6);
+  backdrop-filter: blur(10px);
+}
+
+#welcomeForm input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+button {
+  padding: 10px 25px;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s;
+  margin-top: 15px;
+}
+
+button:hover { transform: scale(1.1); }
+
+h1 {
+  font-size: 3em;
+  color: #fff;
+  text-shadow: 0 0 15px #fff, 0 0 30px #ff69b4, 0 0 45px #ff1493;
+  animation: glow 2s ease-in-out infinite alternate;
+  text-align: center;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4, 0 0 30px #ff1493; }
+  to { text-shadow: 0 0 20px #fff, 0 0 35px #ff69b4, 0 0 50px #ff1493; }
+}
+
+.cake {
+  position: relative;
+  width: 200px;
+  height: 120px;
+  background: #ff69b4;
+  border-radius: 15px;
+  margin-top: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.cake::before {
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 30px;
+  background: #ff1493;
+  border-radius: 10px;
+}
+
+.candle {
+  position: absolute;
+  top: -50px;
+  width: 12px;
+  height: 50px;
+  background: white;
+  border-radius: 3px;
+}
+
+.flame {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle, yellow, orange, red);
+  border-radius: 50%;
+  animation: flicker 0.2s infinite alternate;
+}
+
+@keyframes flicker {
+  from { transform: translateX(-50%) scale(1); opacity: 0.8; }
+  to { transform: translateX(-50%) scale(1.2); opacity: 1; }
+}
+
+  </style>
+</head>
+<body>
+  <!-- Form input nama -->
+  <div id="welcomeForm">
+    <h2 style="color:white; text-shadow:0 0 10px #ff1493">Masukkan Namamu 🎂</h2>
+    <input type="text" id="username" placeholder="Namamu...">
+    <button onclick="goToCake()">Lanjut</button>
+  </div>  <!-- Form kue -->  <div id="cakeForm" class="hidden">
+    <h2 style="color:white; text-shadow:0 0 10px #ff1493">Tiup Lilinnya 🎂</h2>
+    <div class="cake">
+      <div class="candle" style="left:20%;"><div class="flame"></div></div>
+      <div class="candle" style="left:35%;"><div class="flame"></div></div>
+      <div class="candle" style="left:50%;"><div class="flame"></div></div>
+      <div class="candle" style="left:65%;"><div class="flame"></div></div>
+      <div class="candle" style="left:80%;"><div class="flame"></div></div>
+    </div>
+    <button onclick="blowCandles()">Tiup Lilin 🎂</button>
+  </div>  <!-- Form ucapan -->  <div id="greetingForm" class="hidden">
+    <h1 id="greeting">🎉 Happy Birthday 🎂</h1>
+    <p style="color:white; text-align:center; max-width:500px; font-size:1.3em; text-shadow:0 0 10px #ff69b4">
+      Semoga panjang umur, sehat selalu, dan semua harapanmu tercapai 💖🎂🎉
+    </p>
+  </div><audio id="blowSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_14a4970b74.mp3?filename=blow-124099.mp3"></audio>
+
+  <script>
+    let userName = "";
+
+    function goToCake() {
+      userName = document.getElementById('username').value || 'Sahabat';
+      document.getElementById('welcomeForm').classList.add('hidden');
+      document.getElementById('cakeForm').classList.remove('hidden');
+    }
+
+    function blowCandles() {
+      document.querySelectorAll('.flame').forEach(f => f.style.display = 'none');
+      document.getElementById('blowSound').play();
+      setTimeout(() => {
+        document.getElementById('cakeForm').classList.add('hidden');
+        document.getElementById('greeting').innerText = `🎉 Happy Birthday ${userName} 🎂`;
+        document.getElementById('greetingForm').classList.remove('hidden');
+      }, 1000);
+    }
+  </script></body>
+</html>
