@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday</title>
+  <style>
+    body {
+      margin:0; height:100vh; display:flex; justify-content:center; align-items:center;
+      flex-direction:column; font-family:'Poppins',sans-serif;
+      background: radial-gradient(circle at top, #ffb6e6, #ff69b4, #ff1493);
+      overflow:hidden;
+    }
+    h1 {
+      font-size:3em; color:white; text-shadow:0 0 15px #fff, 0 0 30px #ff69b4, 0 0 45px #ff1493;
+      animation: glow 2s ease-in-out infinite alternate; z-index: 2;
+    }
+    @keyframes glow {
+      from { text-shadow:0 0 10px #fff, 0 0 20px #ff69b4, 0 0 30px #ff1493; }
+      to   { text-shadow:0 0 20px #fff, 0 0 35px #ff69b4, 0 0 50px #ff1493; }
+    }
+    .confetti {
+      position:absolute; width:10px; height:10px; border-radius:50%; opacity:0.8;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      to { transform:translateY(110vh) rotate(720deg); }
+    }
+    .balloon {
+      position: absolute; bottom: -150px; width: 40px; height: 60px;
+      background: red; border-radius: 50%; opacity: 0.8;
+      animation: floatUp 8s linear forwards;
+    }
+    .balloon::after {
+      content: ''; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 20px; background: #555;
+    }
+    @keyframes floatUp {
+      to { transform: translateY(-110vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="greeting">🎉 Happy Birthday 🎂</h1>
+  <p style="color:white;text-align:center;max-width:500px;font-size:1.3em;text-shadow:0 0 10px #ff69b4;z-index:2;">
+    Semoga panjang umur, sehat selalu, dan semua harapanmu tercapai 💖🎂🎉
+  </p>
+
+  <script>
+    const name = localStorage.getItem("username") || "Sahabat";
+    document.getElementById("greeting").innerText = `🎉 Happy Birthday ${name} 🎂`;
+
+    function createConfetti() {
+      const confetti = document.createElement("div"); 
+      confetti.classList.add("confetti");
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.backgroundColor = `hsl(${Math.random()*360},100%,60%)`;
+      confetti.style.animationDuration = (Math.random()*3+2)+"s";
+      document.body.appendChild(confetti);
+      setTimeout(()=>confetti.remove(),5000);
+    }
+    setInterval(createConfetti,150);
+
+    function createBalloon() {
+      const balloon = document.createElement("div");
+      balloon.classList.add("balloon");
+      balloon.style.left = Math.random() * 100 + "vw";
+      balloon.style.backgroundColor = `hsl(${Math.random()*360}, 70%, 60%)`;
+      balloon.style.animationDuration = (Math.random()*5+5) + "s";
+      document.body.appendChild(balloon);
+      setTimeout(()=>balloon.remove(), 8000);
+    }
+    setInterval(createBalloon, 800);
+  </script>
+</body>
+</html>
